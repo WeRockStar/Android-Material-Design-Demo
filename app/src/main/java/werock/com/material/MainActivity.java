@@ -15,6 +15,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import werock.com.material.domain.Car;
+import werock.com.material.fragments.CarFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,6 +73,9 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Setting press", Toast.LENGTH_LONG).show();
             }
         });
+
+        //TODO Fragment
+        CarFragment carFragment = (CarFragment)getSupportFragmentManager().findFragmentByTag("mainFrag");
     }
 
     @Override
