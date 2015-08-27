@@ -12,7 +12,9 @@ import android.view.ViewGroup;
 
 import java.util.List;
 
+import werock.com.material.MainActivity;
 import werock.com.material.R;
+import werock.com.material.adapters.CarAdapter;
 import werock.com.material.domain.Car;
 
 /**
@@ -39,12 +41,24 @@ public class CarFragment extends Fragment {
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
+
+                if (list.size() == linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                    
+                }
             }
         });
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         recyclerView.setLayoutManager(linearLayoutManager);
+
+        list = ((MainActivity) getActivity()).getSetCarList(10);
+        CarAdapter carAdapter = new CarAdapter(getActivity(), list);
+        recyclerView.setAdapter(carAdapter);
+
         return view;
     }
 }
