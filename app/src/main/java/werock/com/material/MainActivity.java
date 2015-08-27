@@ -22,7 +22,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setTitle("Main Activity");
+        toolbar.setTitle("  Main Activity");
         toolbar.setTitleTextColor(Color.rgb(255, 255, 255));
         //toolbar.setSubtitle("Subtitle");
         toolbar.setLogo(R.drawable.android);

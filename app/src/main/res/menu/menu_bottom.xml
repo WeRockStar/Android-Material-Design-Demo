@@ -8,6 +8,7 @@
         android:icon="@drawable/facebook_box"
         android:orderInCategory="100"
         android:title="facebook"
+
         app:showAsAction="always" />
 
     <item

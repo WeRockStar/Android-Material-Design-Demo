@@ -3,6 +3,7 @@ package werock.com.material;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.Build;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -69,6 +70,14 @@ public class SecondActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Setting press", Toast.LENGTH_LONG).show();
             }
         });
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP) {
+            toolbar.setBackgroundResource(R.drawable.toolbar_rounded_corners);
+        }
     }
 
     @Override

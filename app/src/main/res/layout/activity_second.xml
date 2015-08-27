@@ -1,29 +1,22 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="werock.com.material.SecondActivity">
 
     <android.support.v7.widget.Toolbar
         android:id="@+id/toolbar_main"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light"
         android:layout_width="match_parent"
         android:layout_height="?attr/actionBarSize"
         android:layout_alignParentLeft="true"
-        android:elevation="4dp"
-        android:background="?attr/colorPrimary"
         android:layout_margin="8dp"
-        android:minHeight="?attr/actionBarSize">
+        android:background="@drawable/toolbar_rounded_corners"
+        android:elevation="4dp"
+        android:minHeight="?attr/actionBarSize"
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
 
     </android.support.v7.widget.Toolbar>
-
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/toolbar_main"
-        android:layout_marginTop="10dp"
-        android:text="@string/hello_world" />
 
 
     <include
