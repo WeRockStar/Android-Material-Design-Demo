@@ -23,6 +23,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle("Main Activity");
         //toolbar.setSubtitle("Subtitle");
+        toolbar.setLogo(R.drawable.);
         setSupportActionBar(toolbar);
 
         toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
