@@ -9,6 +9,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
 import java.util.List;
 
@@ -16,11 +17,12 @@ import werock.com.material.MainActivity;
 import werock.com.material.R;
 import werock.com.material.adapters.CarAdapter;
 import werock.com.material.domain.Car;
+import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
 
 /**
  * Created by Kotchaphan Muangsan on 28/8/2558.
  */
-public class CarFragment extends Fragment {
+public class CarFragment extends Fragment implements RecyclerViewOnClickListenerHack {
 
     private RecyclerView recyclerView;
     private List<Car> list;
@@ -61,8 +63,17 @@ public class CarFragment extends Fragment {
 
         list = ((MainActivity) getActivity()).getSetCarList(10);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
+        carAdapter.setRecyclerViewOnClickListenerHack(this);
         recyclerView.setAdapter(carAdapter);
 
         return view;
+    }
+
+    @Override
+    public void OnClickListener(View view, int position) {
+        Toast.makeText(getActivity(), "Postion : " + position, Toast.LENGTH_SHORT).show();
+
+        CarAdapter adapter = (CarAdapter)recyclerView.getAdapter();
+        adapter.removeListItem(position);
     }
 }

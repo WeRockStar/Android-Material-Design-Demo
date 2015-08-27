@@ -13,6 +13,7 @@ import java.util.List;
 
 import werock.com.material.R;
 import werock.com.material.domain.Car;
+import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
 
 /**
  * Created by Kotchaphan Muangsan on 28/8/2558.
@@ -21,7 +22,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
     private List<Car> carList;
     private LayoutInflater layoutInflater;
-
+    private RecyclerViewOnClickListenerHack recyclerViewOnClickListenerHack;
 
     public CarAdapter(Context context, List<Car> carList) {
         this.carList = carList;
@@ -54,12 +55,23 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         return carList.size();
     }
 
+
+    public void setRecyclerViewOnClickListenerHack(RecyclerViewOnClickListenerHack hack) {
+        recyclerViewOnClickListenerHack = hack;
+    }
+
     public void addListItem(Car car, int position) {
         carList.add(car);
         notifyItemInserted(position);
+
     }
 
-    public class MyViewHolder extends RecyclerView.ViewHolder {
+    public void removeListItem(int position){
+        carList.remove(position);
+        notifyItemRemoved(position);
+    }
+
+    public class MyViewHolder extends RecyclerView.ViewHolder implements View.OnClickListener {
         public ImageView imageCar;
         public TextView tvModel;
         public TextView tvBrand;
@@ -70,6 +82,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
             imageCar = (ImageView) view.findViewById(R.id.iv_car);
             tvModel = (TextView) view.findViewById(R.id.tv_model);
             tvBrand = (TextView) view.findViewById(R.id.tv_brand);
+
+            view.setOnClickListener(this);
+        }
+
+        @Override
+        public void onClick(View v) {
+            if (recyclerViewOnClickListenerHack != null) {
+                recyclerViewOnClickListenerHack.OnClickListener(v, getPosition());
+            }
         }
     }
 }
