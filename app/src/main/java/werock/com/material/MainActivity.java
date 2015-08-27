@@ -7,6 +7,8 @@ import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -56,6 +58,12 @@ public class MainActivity extends AppCompatActivity {
         });
         //menu bottom
         toolbar_bottom.inflateMenu(R.menu.menu_bottom);
+        toolbar_bottom.findViewById(R.id.iv_setting).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(getApplicationContext(), "Setting press", Toast.LENGTH_LONG).show();
+            }
+        });
     }
 
     @Override
