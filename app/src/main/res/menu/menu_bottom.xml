@@ -1,6 +1,39 @@
 <?xml version="1.0" encoding="utf-8"?>
-<menu xmlns:android="http://schemas.android.com/apk/res/android">
-    <item>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    tools:context=".MainActivity">
+    <item
+        android:id="@+id/facebook"
+        android:icon="@drawable/facebook-box"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="facebook" />
 
-    </item>
+    <item
+        android:id="@+id/youtube"
+        android:icon="@drawable/youtube-play"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="youtube" />
+
+    <item
+        android:id="@+id/google_plus"
+        android:icon="@drawable/google-plus-box"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="google-plus" />
+
+    <item
+        android:id="@+id/linkedin"
+        android:icon="@drawable/linkedin-box"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="linkedin" />
+
+    <item
+        android:id="@+id/whatsapp"
+        android:icon="@drawable/whatsapp"
+        android:orderInCategory="100"
+        android:showAsAction="always"
+        android:title="whatsapp" />
 </menu>
