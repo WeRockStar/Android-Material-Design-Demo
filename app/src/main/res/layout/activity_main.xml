@@ -17,6 +17,15 @@
 
     </android.support.v7.widget.Toolbar>
 
+    <RelativeLayout
+        android:id="@+id/rl_fragment_container"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/inc_toolbar_bottom"
+        android:layout_below="@+id/toolbar_main">
+
+    </RelativeLayout>
+
     <include
         android:id="@+id/inc_toolbar_bottom"
         layout="@layout/toolbar_bottom"></include>
