@@ -1,6 +1,7 @@
 package werock.com.material;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -24,8 +25,10 @@ public class SecondActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle("Second Activity");
+        toolbar.setTitleTextColor(Color.rgb(255, 255, 255));
         //toolbar.setSubtitle("Subtitle");
         setSupportActionBar(toolbar);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
         toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
         toolbar_bottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
@@ -83,10 +86,11 @@ public class SecondActivity extends AppCompatActivity {
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            finish();
+            return (true);
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
     }
 }

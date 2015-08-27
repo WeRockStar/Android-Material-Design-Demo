@@ -1,6 +1,7 @@
 package werock.com.material;
 
 import android.content.Intent;
+import android.graphics.Color;
 import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -22,8 +23,9 @@ public class MainActivity extends AppCompatActivity {
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle("Main Activity");
+        toolbar.setTitleTextColor(Color.rgb(255, 255, 255));
         //toolbar.setSubtitle("Subtitle");
-        toolbar.setLogo(R.drawable.);
+        toolbar.setLogo(R.drawable.android);
         setSupportActionBar(toolbar);
 
         toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
@@ -83,7 +85,8 @@ public class MainActivity extends AppCompatActivity {
 
         //noinspection SimplifiableIfStatement
         if (id == R.id.action_settings) {
-            return true;
+            Intent intent = new Intent(this, SecondActivity.class);
+            startActivity(intent);
         }
 
         return super.onOptionsItemSelected(item);
