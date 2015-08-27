@@ -11,7 +11,10 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.List;
+
+import werock.com.material.domain.Car;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -94,7 +97,22 @@ public class MainActivity extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
-    public List<Car> getSetCarList (int qtd){
+    public List<Car> getSetCarList(int qtd) {
+        String[] models = new String[]{"PHP", "C#", "Java", "C++", "C", "SQL", "HTML5", "CSS3"
+                , "JavaScript", "Go", "Scala", "Ruby", "Python", "R"};
+        String[] brands = new String[]{"Web", "Web Desktop", "Web Desktop", "Desktop", "Desktop", "Database"
+                , "Web", "Web", "Web", "Web Server", "Unknow", "Web", "Web Desktop"
+                , "Analysis"};
+        int[] image = {R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
+                R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
+                R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
+                R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web};
 
+        List<Car> carList = new ArrayList<>();
+        for (int i = 0; i < qtd; i++) {
+            Car car = new Car(models[i % models.length], brands[i % brands.length], image[i % image.length]);
+            carList.add(car);
+        }
+        return carList;
     }
 }
