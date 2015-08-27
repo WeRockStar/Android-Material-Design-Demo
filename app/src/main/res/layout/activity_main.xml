@@ -18,6 +18,12 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@+id/toolbar_main"
+        android:layout_marginTop="10dp"
         android:text="@string/hello_world" />
+
+
+    <include
+        android:id="@+id/inc_toolbar_bottom"
+        layout="@layout/toolbar_bottom"></include>
 
 </RelativeLayout>

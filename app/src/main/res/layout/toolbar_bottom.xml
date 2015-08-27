@@ -4,12 +4,15 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:background="?attr/colorPrimary"
+    android:layout_alignParentBottom="true"
     android:minHeight="?attr/actionBarSize">
 
+
     <ImageView
-        android:layout_width="24"
+        android:layout_width="24dp"
         android:id="@+id/iv_setting"
-        android:layout_height="24" />
+        android:src="@drawable/settings"
+        android:layout_height="24dp" />
 
 
 </android.support.v7.widget.Toolbar>

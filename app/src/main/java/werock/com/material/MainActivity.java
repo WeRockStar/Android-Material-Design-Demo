@@ -9,6 +9,7 @@ import android.view.MenuItem;
 public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
+    private Toolbar toolbar_bottom;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -19,6 +20,15 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("Main Activity");
         //toolbar.setSubtitle("Subtitle");
         setSupportActionBar(toolbar);
+
+        toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
+        toolbar_bottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
+            @Override
+            public boolean onMenuItemClick(MenuItem menuItem) {
+
+                return false;
+            }
+        });
     }
 
     @Override
