@@ -1,5 +1,7 @@
 package werock.com.material;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -25,10 +27,35 @@ public class MainActivity extends AppCompatActivity {
         toolbar_bottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
             public boolean onMenuItemClick(MenuItem menuItem) {
-
-                return false;
+                Intent intent = null;
+                switch (menuItem.getItemId()) {
+                    case R.id.facebook:
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://www.facebook.com"));
+                        break;
+                    case R.id.youtube:
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://www.youtube.com"));
+                        break;
+                    case R.id.google_plus:
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://www.plus.google.com"));
+                        break;
+                    case R.id.linkedin:
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://www.linkedin.com"));
+                        break;
+                    case R.id.whatsapp:
+                        intent = new Intent(Intent.ACTION_VIEW);
+                        intent.setData(Uri.parse("http://www.whatsapp.com"));
+                        break;
+                }
+                startActivity(intent);
+                return true;
             }
         });
+        //menu bottom
+        toolbar_bottom.inflateMenu(R.menu.menu_bottom);
     }
 
     @Override
