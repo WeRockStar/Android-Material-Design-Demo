@@ -45,6 +45,7 @@ public class CarFragment extends Fragment {
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
                 CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
 
+                //When Last Intem
                 if (list.size() == linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
                     List<Car> listCar = ((MainActivity) getActivity()).getSetCarList(10);
                     for (int i = 0; i < listCar.size(); i++) {
