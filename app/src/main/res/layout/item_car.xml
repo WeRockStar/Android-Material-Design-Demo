@@ -20,6 +20,7 @@
         android:layout_marginBottom="5dp"
         android:layout_toRightOf="@+id/iv_car"
         android:paddingRight="16dp"
+        android:text="Model"
         android:textColor="#000"
         android:textSize="16dp" />
 
@@ -30,6 +31,8 @@
         android:layout_alignLeft="@+id/tv_model"
         android:layout_marginBottom="5dp"
         android:paddingRight="16dp"
+        android:layout_below="@+id/tv_model"
+        android:text="Brand"
         android:textColor="#000"
         android:textSize="12sp" />
 

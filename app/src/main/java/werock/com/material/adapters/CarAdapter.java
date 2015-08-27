@@ -54,6 +54,11 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         return carList.size();
     }
 
+    public void addListItem(Car car, int position) {
+        carList.add(car);
+        notifyItemInserted(position);
+    }
+
     public class MyViewHolder extends RecyclerView.ViewHolder {
         public ImageView imageCar;
         public TextView tvModel;
