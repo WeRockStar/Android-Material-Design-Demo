@@ -3,6 +3,7 @@ package werock.com.material;
 import android.content.Intent;
 import android.graphics.Color;
 import android.net.Uri;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
@@ -75,7 +76,13 @@ public class MainActivity extends AppCompatActivity {
         });
 
         //TODO Fragment
-        CarFragment carFragment = (CarFragment)getSupportFragmentManager().findFragmentByTag("mainFrag");
+        CarFragment carFragment = (CarFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
+        if (carFragment == null) {
+            carFragment = new CarFragment();
+            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+            fragmentTransaction.replace(R.id.rl_fragment_container, carFragment, "mainFrag");
+            fragmentTransaction.commit();
+        }
     }
 
     @Override
