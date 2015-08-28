@@ -42,7 +42,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         try {
             //TODO Animation view
             YoYo.with(Techniques.SlideInDown)
-                    .duration(700)
+                    .duration(1000)
                     .playOn(holder.itemView);
 
         } catch (Exception e) {
