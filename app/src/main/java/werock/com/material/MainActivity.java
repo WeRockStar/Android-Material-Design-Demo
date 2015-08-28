@@ -14,11 +14,16 @@ import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
 
+import com.mikepenz.materialdrawer.AccountHeader;
+import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -32,6 +37,7 @@ public class MainActivity extends AppCompatActivity {
     private Toolbar toolbar_bottom;
     private Drawer drawerLeft;
     private Drawer drawerRight;
+    private AccountHeader accountHeader;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -95,6 +101,48 @@ public class MainActivity extends AppCompatActivity {
         }
 
         //TODO NavigationDrawer
+
+        // Create the AccountHeader
+        accountHeader = new AccountHeaderBuilder()
+                .withActivity(this)
+                .withHeaderBackground(R.drawable.bill_gates)
+                .addProfiles(
+                        new ProfileDrawerItem().withName("Kotchaphan Muangsan").withEmail("kotchaphan.m@demo.com").withIcon(getResources().getDrawable(R.drawable.android))
+                )
+                .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
+                    @Override
+                    public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
+                        return false;
+                    }
+                })
+                .build();
+        PrimaryDrawerItem facebookItem = new PrimaryDrawerItem().withName("Facebook").withIcon(R.drawable.facebook_box);
+        PrimaryDrawerItem whatappItem = new PrimaryDrawerItem().withName("Whatsapp").withIcon(R.drawable.whatsapp);
+        PrimaryDrawerItem youtubeItem = new PrimaryDrawerItem().withName("Youtube").withIcon(R.drawable.youtube_play);
+        PrimaryDrawerItem googleplusItem = new PrimaryDrawerItem().withName("Google plus").withIcon(R.drawable.google_plus_box);
+        PrimaryDrawerItem linkedInIntem = new PrimaryDrawerItem().withName("LinkedIn").withIcon(R.drawable.linkedin_box);
+        PrimaryDrawerItem settingIntem = new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.settings);
+        //SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem().withName("Second").withIcon(R.drawable.web);
+        drawerLeft = new DrawerBuilder()
+                .withActivity(this)
+                .withDrawerGravity(Gravity.LEFT)
+                .withToolbar(toolbar)
+                .withDisplayBelowStatusBar(true)
+                .withSelectedItem(0)
+                .addDrawerItems(
+                        facebookItem,
+                        youtubeItem,
+                        whatappItem,
+                        googleplusItem,
+                        linkedInIntem, new DividerDrawerItem(),
+                        settingIntem
+                )
+                .withActionBarDrawerToggleAnimated(true)
+                .withSavedInstance(savedInstanceState)
+                .withAccountHeader(accountHeader)
+                .build();
+
+        /*
         drawerLeft = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
@@ -124,6 +172,7 @@ public class MainActivity extends AppCompatActivity {
         drawerLeft.addItem(new ProfileDrawerItem().withName("Whatsapp"));
         drawerLeft.addItem(new ProfileDrawerItem().withName("LikedIn"));
         drawerLeft.addItem(new ProfileDrawerItem().withName("Google plus"));
+        */
     }
 
     @Override
