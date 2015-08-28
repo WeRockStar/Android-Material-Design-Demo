@@ -23,13 +23,20 @@ import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
  */
 public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
+    private Context context;
     private List<Car> carList;
     private LayoutInflater layoutInflater;
     private RecyclerViewOnClickListenerHack recyclerViewOnClickListenerHack;
+    private float scale;
+    private int width;
+    private int height;
 
     public CarAdapter(Context context, List<Car> carList) {
+        this.context = context;
         this.carList = carList;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        this.scale = this.context.getResources().getDisplayMetrics().density;
     }
 
     @Override

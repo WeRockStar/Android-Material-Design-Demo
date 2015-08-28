@@ -114,7 +114,7 @@ public class MainActivity extends AppCompatActivity {
         String[] brands = new String[]{"Web", "Web Desktop", "Web Desktop", "Desktop", "Desktop", "Database"
                 , "Web", "Web", "Web", "Web Server", "Unknow", "Web", "Web Desktop"
                 , "Analysis"};
-        int[] image = {R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
+        int[] image = {R.drawable.bill_gates, R.drawable.bill_gates, R.drawable.web, R.drawable.web,
                 R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
                 R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web,
                 R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web};
