@@ -9,6 +9,9 @@ import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.daimajia.androidanimations.library.Techniques;
+import com.daimajia.androidanimations.library.YoYo;
+
 import java.util.List;
 
 import werock.com.material.R;
@@ -36,7 +39,15 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         holder.tvModel.setText(carList.get(position).getModels());
         holder.tvBrand.setText(carList.get(position).getBrand());
 
+        try {
+            //TODO Animation view
+            YoYo.with(Techniques.SlideInDown)
+                    .duration(700)
+                    .playOn(holder.itemView);
 
+        } catch (Exception e) {
+
+        }
     }
 
     @Override
@@ -68,7 +79,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
     }
 
-    public void removeListItem(int position){
+    public void removeListItem(int position) {
         carList.remove(position);
         notifyItemRemoved(position);
     }

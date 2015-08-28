@@ -92,7 +92,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
         //for 30 item
-        list = ((MainActivity) getActivity()).getSetCarList(10);
+        list = ((MainActivity) getActivity()).getSetCarList(30);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
 
         //TODO onClick
