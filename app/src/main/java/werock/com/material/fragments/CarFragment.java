@@ -8,6 +8,7 @@ import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.StaggeredGridLayoutManager;
 import android.view.GestureDetector;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
@@ -48,11 +49,21 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
-                CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
+                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
+                //GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+
+                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                int[] aux = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
+                int max = 1;
+                for (int i = 0; i < aux.length; i++) {
+                    max = aux[i] > max ? aux[i] : max;
+                }
+
+                CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
                 //When Last Intem
-                if (list.size() == linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                //if (list.size() == staggeredGridLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                if (list.size() == max) {
                     List<Car> listCar = ((MainActivity) getActivity()).getSetCarList(10);
                     for (int i = 0; i < listCar.size(); i++) {
                         carAdapter.addListItem(listCar.get(i), list.size());
@@ -60,6 +71,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
                 }
             }
         });
+
         //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
@@ -70,12 +82,17 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setLayoutManager(linearLayoutManager);
         */
 
-
-        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2 , GridLayoutManager.VERTICAL, false);
-        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        /*
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
+         */
 
-        list = ((MainActivity) getActivity()).getSetCarList(30);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
+        recyclerView.setLayoutManager(staggeredGridLayoutManager);
+
+        //for 30 item
+        list = ((MainActivity) getActivity()).getSetCarList(10);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
 
         //TODO onClick

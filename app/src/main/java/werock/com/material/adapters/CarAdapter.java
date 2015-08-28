@@ -35,6 +35,8 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         holder.imageCar.setImageResource(carList.get(position).getImage());
         holder.tvModel.setText(carList.get(position).getModels());
         holder.tvBrand.setText(carList.get(position).getBrand());
+
+
     }
 
     @Override
