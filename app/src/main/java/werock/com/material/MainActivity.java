@@ -1,16 +1,24 @@
 package werock.com.material;
 
 import android.content.Intent;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
+import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.model.DividerDrawerItem;
+import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
+import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -22,6 +30,8 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private Toolbar toolbar_bottom;
+    private Drawer drawerLeft;
+    private Drawer drawerRight;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -83,6 +93,37 @@ public class MainActivity extends AppCompatActivity {
             fragmentTransaction.replace(R.id.rl_fragment_container, carFragment, "mainFrag");
             fragmentTransaction.commit();
         }
+
+        //TODO NavigationDrawer
+        drawerLeft = new DrawerBuilder()
+                .withActivity(this)
+                .withToolbar(toolbar)
+                .withDisplayBelowStatusBar(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .withDrawerGravity(Gravity.LEFT)
+                .withSavedInstance(savedInstanceState)
+                .withSelectedItem(0)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        Toast.makeText(MainActivity.this, "onItemClick : " + i, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int i, IDrawerItem iDrawerItem) {
+                        Toast.makeText(MainActivity.this, "onItemLongClick : " + i, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
+                .build();
+
+        drawerLeft.addItem(new ProfileDrawerItem().withName("Facebook"));
+        drawerLeft.addItem(new ProfileDrawerItem().withName("Youtube"));
+        drawerLeft.addItem(new ProfileDrawerItem().withName("Whatsapp"));
+        drawerLeft.addItem(new ProfileDrawerItem().withName("LikedIn"));
+        drawerLeft.addItem(new ProfileDrawerItem().withName("Google plus"));
     }
 
     @Override
