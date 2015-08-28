@@ -1,12 +1,15 @@
 package werock.com.material.fragments;
 
 
+import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.GestureDetector;
 import android.view.LayoutInflater;
+import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
@@ -71,9 +74,37 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
     @Override
     public void OnClickListener(View view, int position) {
-        Toast.makeText(getActivity(), "Postion : " + position, Toast.LENGTH_SHORT).show();
+        Toast.makeText(getActivity(), "onClick Postion : " + position, Toast.LENGTH_SHORT).show();
+
+        CarAdapter adapter = (CarAdapter) recyclerView.getAdapter();
+        adapter.removeListItem(position);
+    }
+
+    @Override
+    public void OnLongClickListener(View view, int position) {
+        Toast.makeText(getActivity(), "onLongClick Position : " + position, Toast.LENGTH_SHORT).show();
 
         CarAdapter adapter = (CarAdapter)recyclerView.getAdapter();
         adapter.removeListItem(position);
+    }
+
+    private static class RecyclerViewTouchListener implements RecyclerView.OnItemTouchListener {
+        private Context context;
+        private GestureDetector gestureDetector;
+        private RecyclerViewOnClickListenerHack recyclerViewOnClickListenerHack;
+
+        @Override
+        public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            return false;
+        }
+
+        @Override
+        public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+        }
+
+        @Override
+        public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
+
+        }
     }
 }
