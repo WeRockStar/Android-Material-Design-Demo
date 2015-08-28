@@ -12,6 +12,7 @@ import android.view.Gravity;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.Toast;
 
 import com.mikepenz.materialdrawer.AccountHeader;
@@ -38,6 +39,13 @@ public class MainActivity extends AppCompatActivity {
     private Drawer drawerLeft;
     private Drawer drawerRight;
     private AccountHeader accountHeader;
+
+    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
+        @Override
+        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+            Toast.makeText(MainActivity.this, "onCheckChange : " + (isChecked ? true : false), Toast.LENGTH_SHORT).show();
+        }
+    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -122,6 +130,7 @@ public class MainActivity extends AppCompatActivity {
         PrimaryDrawerItem googleplusItem = new PrimaryDrawerItem().withName("Google plus").withIcon(R.drawable.google_plus_box);
         PrimaryDrawerItem linkedInIntem = new PrimaryDrawerItem().withName("LinkedIn").withIcon(R.drawable.linkedin_box);
         PrimaryDrawerItem settingIntem = new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.settings);
+        PrimaryDrawerItem checkItem = new PrimaryDrawerItem().withName("News").withIcon(R.drawable.newspaper);
         //SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem().withName("Second").withIcon(R.drawable.web);
         drawerLeft = new DrawerBuilder()
                 .withActivity(this)
@@ -140,6 +149,20 @@ public class MainActivity extends AppCompatActivity {
                 .withActionBarDrawerToggleAnimated(true)
                 .withSavedInstance(savedInstanceState)
                 .withAccountHeader(accountHeader)
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        Toast.makeText(MainActivity.this, "onClick : " + i, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int i, IDrawerItem iDrawerItem) {
+                        Toast.makeText(MainActivity.this, "onLongClick : " + i, Toast.LENGTH_SHORT).show();
+                        return false;
+                    }
+                })
                 .build();
 
         /*
