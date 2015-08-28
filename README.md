@@ -7,5 +7,8 @@ dependencies {
     compile 'com.nineoldandroids:library:2.4.0'
     compile 'com.daimajia.easing:library:1.0.1@aar'
     compile 'com.daimajia.androidanimations:library:1.1.3@aar'
+    compile('com.mikepenz:materialdrawer:4.0.3@aar') {
+        transitive = true
+    }
 }
 ```
