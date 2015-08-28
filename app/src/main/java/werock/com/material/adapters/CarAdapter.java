@@ -36,7 +36,9 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
         this.carList = carList;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        //Scale for pre lollipop
         this.scale = this.context.getResources().getDisplayMetrics().density;
+        this.width = this.context.getResources().getDisplayMetrics().widthPixels - (int) (14 * scale);
     }
 
     @Override
