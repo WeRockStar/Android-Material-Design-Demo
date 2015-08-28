@@ -1,6 +1,9 @@
 package werock.com.material.adapters;
 
 import android.content.Context;
+import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
+import android.os.Build;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -38,15 +41,24 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
         //Scale for pre lollipop
         this.scale = this.context.getResources().getDisplayMetrics().density;
-        this.width = this.context.getResources().getDisplayMetrics().widthPixels - (int) (14 * scale);
+        this.width = this.context.getResources().getDisplayMetrics().widthPixels - (int) (14 * scale + 0.5f);
+        this.height = (width / 16) * 9;
     }
 
     @Override
     public void onBindViewHolder(MyViewHolder holder, int position) {
         Log.d("LOG", "onBindViewHolder");
-        holder.imageCar.setImageResource(carList.get(position).getImage());
         holder.tvModel.setText(carList.get(position).getModels());
         holder.tvBrand.setText(carList.get(position).getBrand());
+
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            holder.imageCar.setImageResource(carList.get(position).getImage());
+        } else {
+            Bitmap bitmap = BitmapFactory.decodeResource(this.context.getResources(), carList.get(position).getImage());
+            bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
+
+            holder.imageCar.setImageBitmap(bitmap);
+        }
 
         try {
             //TODO Animation view
