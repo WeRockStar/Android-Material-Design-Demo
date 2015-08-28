@@ -59,6 +59,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
                 }
             }
         });
+        recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
@@ -66,7 +67,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         list = ((MainActivity) getActivity()).getSetCarList(10);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
-        carAdapter.setRecyclerViewOnClickListenerHack(this);
+        //carAdapter.setRecyclerViewOnClickListenerHack(this);
         recyclerView.setAdapter(carAdapter);
 
         return view;
@@ -84,7 +85,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
     public void OnLongClickListener(View view, int position) {
         Toast.makeText(getActivity(), "onLongClick Position : " + position, Toast.LENGTH_SHORT).show();
 
-        CarAdapter adapter = (CarAdapter)recyclerView.getAdapter();
+        CarAdapter adapter = (CarAdapter) recyclerView.getAdapter();
         adapter.removeListItem(position);
     }
 
@@ -93,13 +94,45 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         private GestureDetector gestureDetector;
         private RecyclerViewOnClickListenerHack recyclerViewOnClickListenerHack;
 
+
+        public RecyclerViewTouchListener(Context context, final RecyclerView recyclerView
+                , RecyclerViewOnClickListenerHack listenerHack) {
+            this.context = context;
+            this.recyclerViewOnClickListenerHack = listenerHack;
+            this.gestureDetector = new GestureDetector(this.context, new GestureDetector.SimpleOnGestureListener() {
+                @Override
+                public void onLongPress(MotionEvent e) {
+                    super.onLongPress(e);
+
+                    View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
+                    if (view != null && recyclerViewOnClickListenerHack != null) {
+                        recyclerViewOnClickListenerHack.OnLongClickListener(view, recyclerView.getChildPosition(view));
+                    }
+                }
+
+                @Override
+                public boolean onSingleTapUp(MotionEvent e) {
+                    View view = recyclerView.findChildViewUnder(e.getX(), e.getY());
+
+                    if (view != null && recyclerViewOnClickListenerHack != null) {
+                        recyclerViewOnClickListenerHack.OnLongClickListener(view, recyclerView.getChildPosition(view));
+                    }
+
+                    return (true);
+                }
+            });
+        }
+
         @Override
         public boolean onInterceptTouchEvent(RecyclerView rv, MotionEvent e) {
+            gestureDetector.onTouchEvent(e);
             return false;
         }
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
+            
         }
 
         @Override
