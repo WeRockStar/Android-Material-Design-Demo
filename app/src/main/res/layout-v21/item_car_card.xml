@@ -21,9 +21,9 @@
         <ImageView
             android:id="@+id/iv_car"
             android:layout_width="match_parent"
-            android:layout_height="65dp"
+            android:layout_height="wrap_content"
             android:layout_marginRight="6dp"
-            android:src="@drawable/web" />
+            android:src="@drawable/programming" />
 
         <TextView
             android:id="@+id/tv_model"
