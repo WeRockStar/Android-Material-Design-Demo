@@ -5,6 +5,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.GestureDetector;
@@ -59,14 +60,25 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
                 }
             }
         });
+        //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
+        /*
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+        */
 
-        list = ((MainActivity) getActivity()).getSetCarList(10);
+
+        GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2 , GridLayoutManager.VERTICAL, false);
+        gridLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
+        recyclerView.setLayoutManager(gridLayoutManager);
+
+        list = ((MainActivity) getActivity()).getSetCarList(30);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
+
+        //TODO onClick
         //carAdapter.setRecyclerViewOnClickListenerHack(this);
         recyclerView.setAdapter(carAdapter);
 
@@ -132,7 +144,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-            
+
         }
 
         @Override
