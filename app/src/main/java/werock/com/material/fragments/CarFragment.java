@@ -87,7 +87,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setLayoutManager(gridLayoutManager);
          */
 
-        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(2, StaggeredGridLayoutManager.VERTICAL);
+        StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
 
