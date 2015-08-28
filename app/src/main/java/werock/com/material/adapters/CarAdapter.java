@@ -20,6 +20,7 @@ import java.util.List;
 import werock.com.material.R;
 import werock.com.material.domain.Car;
 import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
+import werock.com.material.tools.ImageHelper;
 
 /**
  * Created by Kotchaphan Muangsan on 28/8/2558.
@@ -57,6 +58,7 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
             Bitmap bitmap = BitmapFactory.decodeResource(this.context.getResources(), carList.get(position).getImage());
             bitmap = Bitmap.createScaledBitmap(bitmap, width, height, false);
 
+            bitmap = ImageHelper.getRoundedCornerBitmap(this.context, bitmap, 4, width, height, false, false, true, true);
             holder.imageCar.setImageBitmap(bitmap);
         }
 
