@@ -16,6 +16,8 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.software.shell.fab.ActionButton;
 
 import java.util.List;
@@ -35,6 +37,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
     private List<Car> list;
     //private FloatingActionButton fab;
     // private ActionButton fab;
+    private FloatingActionMenu fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -111,6 +114,19 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setAdapter(carAdapter);
 
         //TODO Floating Action Button
+        fab = (FloatingActionMenu) getActivity().findViewById(R.id.fab);
+        fab.setOnMenuToggleListener(new FloatingActionMenu.OnMenuToggleListener() {
+            @Override
+            public void onMenuToggle(boolean b) {
+                //Toast.makeText(getActivity(), "Is Menu : " + (b ? "true" : "false"), Toast.LENGTH_SHORT).show();
+            }
+        });
+
+        FloatingActionButton fab1 = (FloatingActionButton) getActivity().findViewById(R.id.fab1);
+        FloatingActionButton fab2 = (FloatingActionButton) getActivity().findViewById(R.id.fab2);
+        FloatingActionButton fab3 = (FloatingActionButton) getActivity().findViewById(R.id.fab3);
+        FloatingActionButton fab4 = (FloatingActionButton) getActivity().findViewById(R.id.fab4);
+        FloatingActionButton fab5 = (FloatingActionButton) getActivity().findViewById(R.id.fab5);
         /*fab = (ActionButton) getActivity().findViewById(R.id.fab);
         fab.setButtonColor(getActivity().getResources().getColor(R.color.colorFAB));
         fab.setButtonColorPressed(getActivity().getResources().getColor(R.color.colorFABPressed));
