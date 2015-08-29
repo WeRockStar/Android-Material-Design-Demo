@@ -44,7 +44,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setHasFixedSize(true);
 
-        /*
+
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -78,7 +78,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             }
         });
 
-        */
+        
         //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
@@ -156,7 +156,6 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
                 }
             }
         });
-
 
         /*
         fab.setOnClickListener(this);
