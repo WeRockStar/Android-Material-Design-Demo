@@ -11,5 +11,7 @@ dependencies {
         transitive = true
     }
     compile 'com.melnykov:floatingactionbutton:1.3.0'
+    compile 'com.github.shell-software:fab:1.1.2'
+    compile 'com.github.clans:fab:1.6.0'
 }
 ```
