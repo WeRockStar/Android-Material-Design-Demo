@@ -13,9 +13,7 @@
         android:background="?attr/colorPrimary"
         android:elevation="4dp"
         android:minHeight="?attr/actionBarSize"
-        app:popupTheme="@style/ThemeOverlay.AppCompat.Light">
-
-    </android.support.v7.widget.Toolbar>
+        app:popupTheme="@style/ThemeOverlay.AppCompat.Light" />
 
     <RelativeLayout
         android:id="@+id/rl_fragment_container"
@@ -26,8 +24,8 @@
 
     </RelativeLayout>
 
-    <include
-        android:id="@+id/inc_toolbar_bottom"
-        layout="@layout/toolbar_bottom"></include>
+    <!--<include-->
+        <!--android:id="@+id/inc_toolbar_bottom"-->
+        <!--layout="@layout/toolbar_bottom"></include>-->
 
 </RelativeLayout>

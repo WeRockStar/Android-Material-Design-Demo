@@ -60,6 +60,8 @@ public class MainActivity extends AppCompatActivity {
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
         */
+
+        /*
         toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
         toolbar_bottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -91,7 +93,10 @@ public class MainActivity extends AppCompatActivity {
                 return true;
             }
         });
-        //menu bottom
+        */
+
+        //TODO menu bottom
+        /*
         toolbar_bottom.inflateMenu(R.menu.menu_bottom);
         toolbar_bottom.findViewById(R.id.iv_setting).setOnClickListener(new View.OnClickListener() {
             @Override
@@ -99,6 +104,7 @@ public class MainActivity extends AppCompatActivity {
                 Toast.makeText(getApplicationContext(), "Setting press", Toast.LENGTH_LONG).show();
             }
         });
+        */
 
         //TODO Fragment
         CarFragment carFragment = (CarFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
