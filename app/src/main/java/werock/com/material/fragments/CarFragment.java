@@ -63,6 +63,12 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 //                    fab.show();
 //                }
 
+                if (dy > 0) {
+                    fab.hideMenuButton(true);
+                } else {
+                    fab.showMenuButton(true);
+                }
+
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                 //GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
@@ -121,12 +127,21 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
                 //Toast.makeText(getActivity(), "Is Menu : " + (b ? "true" : "false"), Toast.LENGTH_SHORT).show();
             }
         });
+        fab.showMenuButton(true);
+        fab.setClosedOnTouchOutside(true);
 
         FloatingActionButton fab1 = (FloatingActionButton) getActivity().findViewById(R.id.fab1);
         FloatingActionButton fab2 = (FloatingActionButton) getActivity().findViewById(R.id.fab2);
         FloatingActionButton fab3 = (FloatingActionButton) getActivity().findViewById(R.id.fab3);
         FloatingActionButton fab4 = (FloatingActionButton) getActivity().findViewById(R.id.fab4);
         FloatingActionButton fab5 = (FloatingActionButton) getActivity().findViewById(R.id.fab5);
+
+        fab1.setOnClickListener(this);
+        fab2.setOnClickListener(this);
+        fab3.setOnClickListener(this);
+        fab4.setOnClickListener(this);
+        fab5.setOnClickListener(this);
+
         /*fab = (ActionButton) getActivity().findViewById(R.id.fab);
         fab.setButtonColor(getActivity().getResources().getColor(R.color.colorFAB));
         fab.setButtonColorPressed(getActivity().getResources().getColor(R.color.colorFABPressed));
@@ -270,6 +285,24 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
     @Override
     public void onClick(View v) {
-        Toast.makeText(getActivity(), "FAB Press", Toast.LENGTH_SHORT).show();
+        String str = "";
+        switch (v.getId()) {
+            case R.id.fab1:
+                str = "Fab 1";
+                break;
+            case R.id.fab2:
+                str = "Fab 2";
+                break;
+            case R.id.fab3:
+                str = "Fab 3";
+                break;
+            case R.id.fab4:
+                str = "Fab 4";
+                break;
+            case R.id.fab5:
+                str = "Fab 5";
+                break;
+        }
+        Toast.makeText(getActivity(), "FAB Press : " + str, Toast.LENGTH_SHORT).show();
     }
 }

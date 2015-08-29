@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
+import android.os.PersistableBundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -15,6 +16,7 @@ import android.view.View;
 import android.widget.CompoundButton;
 import android.widget.Toast;
 
+import com.github.clans.fab.FloatingActionMenu;
 import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
@@ -43,7 +45,7 @@ public class MainActivity extends AppCompatActivity {
     private Drawer drawerLeft;
     private Drawer drawerRight;
     private AccountHeader accountHeader;
-
+    private FloatingActionMenu fab;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -128,9 +130,9 @@ public class MainActivity extends AppCompatActivity {
                                 .withEmail("kotchaphan.m@demo.com")
                                 .withIcon(getResources().getDrawable(R.drawable.web)),
                         new ProfileDrawerItem()
-                                 .withName("WeRockStar")
-                                 .withEmail("rock@demo.com")
-                                 .withIcon(getResources().getDrawable(R.drawable.newspaper))
+                                .withName("WeRockStar")
+                                .withEmail("rock@demo.com")
+                                .withIcon(getResources().getDrawable(R.drawable.newspaper))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -264,6 +266,8 @@ public class MainActivity extends AppCompatActivity {
         drawerLeft.addItem(new ProfileDrawerItem().withName("LikedIn"));
         drawerLeft.addItem(new ProfileDrawerItem().withName("Google plus"));
         */
+
+        fab = (FloatingActionMenu) findViewById(R.id.fab);
     }
 
     @Override
@@ -306,5 +310,25 @@ public class MainActivity extends AppCompatActivity {
             carList.add(car);
         }
         return carList;
+    }
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        outState = drawerRight.saveInstanceState(outState);
+        outState = drawerLeft.saveInstanceState(outState);
+
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onBackPressed() {
+        if (drawerLeft.isDrawerOpen()) {
+            drawerLeft.closeDrawer();
+        } else if (fab.isOpened()) {
+            fab.close(true);
+            //fab.showMenuButton(true);
+        } else {
+            super.onBackPressed();
+        }
     }
 }
