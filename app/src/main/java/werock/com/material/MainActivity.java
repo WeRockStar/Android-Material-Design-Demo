@@ -40,6 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     private Toolbar toolbar;
     private Toolbar toolbar_bottom;
+    //TODO NavigationDrawer
     private Drawer drawerLeft;
     private Drawer drawerRight;
     private AccountHeader accountHeader;
@@ -188,8 +189,17 @@ public class MainActivity extends AppCompatActivity {
                 })
                 .build();
 
-        /*
-        drawerLeft = new DrawerBuilder()
+        drawerRight = new DrawerBuilder()
+                .withActivity(this)
+                //.withToolbar(toolbar)
+                .withDrawerGravity(Gravity.END)
+                .withSavedInstance(savedInstanceState)
+                .withSelectedItem(-1)
+                .withActionBarDrawerToggleAnimated(true)
+                .withDisplayBelowStatusBar(false)
+                .build();
+
+        /*drawerLeft = new DrawerBuilder()
                 .withActivity(this)
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
