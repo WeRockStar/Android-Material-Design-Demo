@@ -34,7 +34,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
     private RecyclerView recyclerView;
     private List<Car> list;
     //private FloatingActionButton fab;
-    private ActionButton fab;
+    // private ActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -54,11 +54,11 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                if(dy > 0){
-                    fab.hide();
-                }else{
-                    fab.show();
-                }
+//                if(dy > 0){
+//                    fab.hide();
+//                }else{
+//                    fab.show();
+//                }
 
                 LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
@@ -111,7 +111,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setAdapter(carAdapter);
 
         //TODO Floating Action Button
-        fab = (ActionButton) getActivity().findViewById(R.id.fab);
+        /*fab = (ActionButton) getActivity().findViewById(R.id.fab);
         fab.setButtonColor(getActivity().getResources().getColor(R.color.colorFAB));
         fab.setButtonColorPressed(getActivity().getResources().getColor(R.color.colorFABPressed));
 
@@ -126,6 +126,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         fab.setOnClickListener(this);
         fab.playShowAnimation();
+        */
 
         /*        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab); */
         /*
