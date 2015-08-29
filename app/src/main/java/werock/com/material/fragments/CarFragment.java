@@ -16,8 +16,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
-import com.melnykov.fab.FloatingActionButton;
-import com.melnykov.fab.ScrollDirectionListener;
+import com.software.shell.fab.ActionButton;
 
 import java.util.List;
 
@@ -34,8 +33,8 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
     private RecyclerView recyclerView;
     private List<Car> list;
-    private FloatingActionButton fab;
-
+    //private FloatingActionButton fab;
+    private ActionButton fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -55,21 +54,27 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
 
-                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                if(dy > 0){
+                    fab.hide();
+                }else{
+                    fab.show();
+                }
+
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                 //GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
 
-                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
-                int[] aux = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
-                int max = 1;
-                for (int i = 0; i < aux.length; i++) {
-                    max = aux[i] > max ? aux[i] : max;
-                }
+//                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+//                int[] aux = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
+//                int max = 1;
+//                for (int i = 0; i < aux.length; i++) {
+//                    max = aux[i] > max ? aux[i] : max;
+//                }
 
                 CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
                 //When Last Intem
-                //if (list.size() == staggeredGridLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
-                if (list.size() == max) {
+                if (list.size() == linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                    //if (list.size() == max) {
                     List<Car> listCar = ((MainActivity) getActivity()).getSetCarList(10);
                     for (int i = 0; i < listCar.size(); i++) {
                         carAdapter.addListItem(listCar.get(i), list.size());
@@ -78,16 +83,14 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             }
         });
 
-        
+
         //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
-
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-
 
         /*
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
@@ -108,9 +111,23 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setAdapter(carAdapter);
 
         //TODO Floating Action Button
-        /*
-        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
-        */
+        fab = (ActionButton) getActivity().findViewById(R.id.fab);
+        fab.setButtonColor(getActivity().getResources().getColor(R.color.colorFAB));
+        fab.setButtonColorPressed(getActivity().getResources().getColor(R.color.colorFABPressed));
+
+        fab.setShowAnimation(ActionButton.Animations.ROLL_FROM_DOWN);
+        fab.setHideAnimation(ActionButton.Animations.ROLL_TO_DOWN);
+
+        fab.setImageResource(R.drawable.plus);
+
+        float scale = getActivity().getResources().getDisplayMetrics().density;
+        int shadow = (int) (3 * scale + 0.5);
+        fab.setShadowRadius(shadow);
+
+        fab.setOnClickListener(this);
+        fab.playShowAnimation();
+
+        /*        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab); */
         /*
         fab.attachToRecyclerView(recyclerView, new ScrollDirectionListener() {
             @Override
