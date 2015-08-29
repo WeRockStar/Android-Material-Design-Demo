@@ -16,6 +16,9 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
 
+import com.melnykov.fab.FloatingActionButton;
+import com.melnykov.fab.ScrollDirectionListener;
+
 import java.util.List;
 
 import werock.com.material.MainActivity;
@@ -27,10 +30,11 @@ import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
 /**
  * Created by Kotchaphan Muangsan on 28/8/2558.
  */
-public class CarFragment extends Fragment implements RecyclerViewOnClickListenerHack {
+public class CarFragment extends Fragment implements RecyclerViewOnClickListenerHack, View.OnClickListener {
 
     private RecyclerView recyclerView;
     private List<Car> list;
+    private FloatingActionButton fab;
 
 
     @Override
@@ -39,6 +43,8 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setHasFixedSize(true);
+
+        /*
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
@@ -72,6 +78,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             }
         });
 
+        */
         //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
@@ -98,6 +105,56 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         //TODO onClick
         //carAdapter.setRecyclerViewOnClickListenerHack(this);
         recyclerView.setAdapter(carAdapter);
+
+        //TODO Floating Action Button
+        fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        fab.attachToRecyclerView(recyclerView, new ScrollDirectionListener() {
+            @Override
+            public void onScrollDown() {
+
+            }
+
+            @Override
+            public void onScrollUp() {
+
+            }
+        }, new RecyclerView.OnScrollListener() {
+            @Override
+            public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
+                super.onScrollStateChanged(recyclerView, newState);
+            }
+
+            @Override
+            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
+                super.onScrolled(recyclerView, dx, dy);
+
+                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+
+                //GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
+
+                StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
+                int[] aux = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
+                int max = 1;
+                for (int i = 0; i < aux.length; i++) {
+                    max = aux[i] > max ? aux[i] : max;
+                }
+
+                CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
+                //When Last Intem
+                //if (list.size() == staggeredGridLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                if (list.size() == max) {
+                    List<Car> listCar = ((MainActivity) getActivity()).getSetCarList(10);
+                    for (int i = 0; i < listCar.size(); i++) {
+                        carAdapter.addListItem(listCar.get(i), list.size());
+                    }
+                }
+            }
+        });
+
+        fab.setOnClickListener(this);
+        // fab.hide();
+        // fab.show();
+        //  fab.setType(FloatingActionButton.TYPE_NORMAL);
 
         return view;
     }
@@ -161,12 +218,15 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         @Override
         public void onTouchEvent(RecyclerView rv, MotionEvent e) {
-
         }
 
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
-
         }
+    }
+
+    @Override
+    public void onClick(View v) {
+        Toast.makeText(getActivity(), "FAB Press", Toast.LENGTH_SHORT).show();
     }
 }
