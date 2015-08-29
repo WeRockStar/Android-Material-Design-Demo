@@ -10,5 +10,6 @@ dependencies {
     compile('com.mikepenz:materialdrawer:4.0.3@aar') {
         transitive = true
     }
+    compile 'com.melnykov:floatingactionbutton:1.3.0'
 }
 ```
