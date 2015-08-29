@@ -82,22 +82,23 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         //TODO onLongClick
         recyclerView.addOnItemTouchListener(new RecyclerViewTouchListener(getActivity(), recyclerView, this));
 
-        /*
+
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
         linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
-        */
+
 
         /*
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(gridLayoutManager);
          */
 
+        /*
         StaggeredGridLayoutManager staggeredGridLayoutManager = new StaggeredGridLayoutManager(1, StaggeredGridLayoutManager.VERTICAL);
         staggeredGridLayoutManager.setGapStrategy(StaggeredGridLayoutManager.GAP_HANDLING_NONE);
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
-
+        */
         //for 30 item
         list = ((MainActivity) getActivity()).getSetCarList(30);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
@@ -107,7 +108,10 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setAdapter(carAdapter);
 
         //TODO Floating Action Button
+        /*
         fab = (FloatingActionButton) getActivity().findViewById(R.id.fab);
+        */
+        /*
         fab.attachToRecyclerView(recyclerView, new ScrollDirectionListener() {
             @Override
             public void onScrollDown() {
@@ -118,31 +122,33 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             public void onScrollUp() {
 
             }
-        }, new RecyclerView.OnScrollListener() {
+        } */ /*, new RecyclerView.OnScrollListener() {
             @Override
             public void onScrollStateChanged(RecyclerView recyclerView, int newState) {
                 super.onScrollStateChanged(recyclerView, newState);
             }
 
             @Override
-            public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
-                super.onScrolled(recyclerView, dx, dy);
+            public void onScrolled(RecyclerView _recyclerView, int dx, int dy) {
+                super.onScrolled(_recyclerView, dx, dy);
 
-                //LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
+                LinearLayoutManager linearLayoutManager = (LinearLayoutManager) recyclerView.getLayoutManager();
 
                 //GridLayoutManager gridLayoutManager = (GridLayoutManager) recyclerView.getLayoutManager();
 
+                /*
                 StaggeredGridLayoutManager staggeredGridLayoutManager = (StaggeredGridLayoutManager) recyclerView.getLayoutManager();
                 int[] aux = staggeredGridLayoutManager.findLastVisibleItemPositions(null);
                 int max = 1;
                 for (int i = 0; i < aux.length; i++) {
                     max = aux[i] > max ? aux[i] : max;
                 }
-
+                */
+        /*
                 CarAdapter carAdapter = (CarAdapter) recyclerView.getAdapter();
                 //When Last Intem
-                //if (list.size() == staggeredGridLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
-                if (list.size() == max) {
+                if (list.size() == linearLayoutManager.findLastCompletelyVisibleItemPosition() + 1) {
+                    //if (list.size() == max) {
                     List<Car> listCar = ((MainActivity) getActivity()).getSetCarList(10);
                     for (int i = 0; i < listCar.size(); i++) {
                         carAdapter.addListItem(listCar.get(i), list.size());
@@ -151,10 +157,13 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
             }
         });
 
+
+        /*
         fab.setOnClickListener(this);
-        // fab.hide();
-        // fab.show();
-        //  fab.setType(FloatingActionButton.TYPE_NORMAL);
+        fab.hide();
+        fab.show();
+        fab.setType(FloatingActionButton.TYPE_NORMAL);
+        */
 
         return view;
     }
@@ -223,6 +232,7 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         @Override
         public void onRequestDisallowInterceptTouchEvent(boolean disallowIntercept) {
         }
+
     }
 
     @Override
