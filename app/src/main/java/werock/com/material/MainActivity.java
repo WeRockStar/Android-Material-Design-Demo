@@ -23,7 +23,6 @@ import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
-import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
 import com.mikepenz.materialdrawer.model.SectionDrawerItem;
 import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
 import com.mikepenz.materialdrawer.model.ToggleDrawerItem;
@@ -45,12 +44,6 @@ public class MainActivity extends AppCompatActivity {
     private Drawer drawerRight;
     private AccountHeader accountHeader;
 
-    private CompoundButton.OnCheckedChangeListener onCheckedChangeListener = new CompoundButton.OnCheckedChangeListener() {
-        @Override
-        public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
-            Toast.makeText(MainActivity.this, "onCheckChange : " + (isChecked ? true : false), Toast.LENGTH_SHORT).show();
-        }
-    };
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -63,7 +56,10 @@ public class MainActivity extends AppCompatActivity {
         //toolbar.setSubtitle("Subtitle");
         toolbar.setLogo(R.drawable.android);
         setSupportActionBar(toolbar);
-
+        /*
+        getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        */
         toolbar_bottom = (Toolbar) findViewById(R.id.inc_toolbar_bottom);
         toolbar_bottom.setOnMenuItemClickListener(new Toolbar.OnMenuItemClickListener() {
             @Override
@@ -118,12 +114,17 @@ public class MainActivity extends AppCompatActivity {
         // Create the AccountHeader
         accountHeader = new AccountHeaderBuilder()
                 .withActivity(this)
+                .withCompactStyle(false) //show other account
                 .withHeaderBackground(R.drawable.bill_gates)
                 .addProfiles(
                         new ProfileDrawerItem()
                                 .withName("Kotchaphan Muangsan")
                                 .withEmail("kotchaphan.m@demo.com")
-                                .withIcon(getResources().getDrawable(R.drawable.web))
+                                .withIcon(getResources().getDrawable(R.drawable.web)),
+                        new ProfileDrawerItem()
+                                 .withName("WeRockStar")
+                                 .withEmail("rock@demo.com")
+                                 .withIcon(getResources().getDrawable(R.drawable.newspaper))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -142,14 +143,14 @@ public class MainActivity extends AppCompatActivity {
         ToggleDrawerItem newsToggleDrawerItem = new ToggleDrawerItem().withName("Auto Update").withChecked(true).withOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
-
+                Toast.makeText(MainActivity.this, "onCheck : " + (b ? "true" : "false"), Toast.LENGTH_SHORT).show();
             }
         });
         SectionDrawerItem socailDrawerItem = new SectionDrawerItem().withName("Social");
         SwitchDrawerItem switcOnOffhDrawerItem = new SwitchDrawerItem().withName("Notification").withChecked(true).withOnCheckedChangeListener(new OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
-
+                Toast.makeText(MainActivity.this, "onCheck : " + (b ? "true" : "false"), Toast.LENGTH_SHORT).show();
             }
         });
         //SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem().withName("Second").withIcon(R.drawable.web);
@@ -159,6 +160,15 @@ public class MainActivity extends AppCompatActivity {
                 .withToolbar(toolbar)
                 .withDisplayBelowStatusBar(true)
                 .withSelectedItem(0)
+                .withActionBarDrawerToggle(true)
+                /*
+                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
+                    @Override
+                    public boolean onNavigationClickListener(View view) {
+                        return false;
+                    }
+                })
+                */
                 .addDrawerItems(
                         socailDrawerItem,
                         facebookItem,
@@ -191,12 +201,31 @@ public class MainActivity extends AppCompatActivity {
 
         drawerRight = new DrawerBuilder()
                 .withActivity(this)
-                //.withToolbar(toolbar)
+                        //.withToolbar(toolbar)
                 .withDrawerGravity(Gravity.END)
                 .withSavedInstance(savedInstanceState)
                 .withSelectedItem(-1)
                 .withActionBarDrawerToggleAnimated(true)
-                .withDisplayBelowStatusBar(false)
+                .withDisplayBelowStatusBar(true)
+                .addDrawerItems(
+                        socailDrawerItem,
+                        facebookItem,
+                        youtubeItem,
+                        whatappItem,
+                        googleplusItem
+                )
+                .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
+                    @Override
+                    public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
+                        return false;
+                    }
+                })
+                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
+                    @Override
+                    public boolean onItemLongClick(View view, int i, IDrawerItem iDrawerItem) {
+                        return false;
+                    }
+                })
                 .build();
 
         /*drawerLeft = new DrawerBuilder()
