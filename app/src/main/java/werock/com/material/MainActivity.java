@@ -19,10 +19,14 @@ import com.mikepenz.materialdrawer.AccountHeader;
 import com.mikepenz.materialdrawer.AccountHeaderBuilder;
 import com.mikepenz.materialdrawer.Drawer;
 import com.mikepenz.materialdrawer.DrawerBuilder;
+import com.mikepenz.materialdrawer.interfaces.OnCheckedChangeListener;
 import com.mikepenz.materialdrawer.model.DividerDrawerItem;
 import com.mikepenz.materialdrawer.model.PrimaryDrawerItem;
 import com.mikepenz.materialdrawer.model.ProfileDrawerItem;
 import com.mikepenz.materialdrawer.model.SecondaryDrawerItem;
+import com.mikepenz.materialdrawer.model.SectionDrawerItem;
+import com.mikepenz.materialdrawer.model.SwitchDrawerItem;
+import com.mikepenz.materialdrawer.model.ToggleDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IDrawerItem;
 import com.mikepenz.materialdrawer.model.interfaces.IProfile;
 
@@ -115,7 +119,10 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withHeaderBackground(R.drawable.bill_gates)
                 .addProfiles(
-                        new ProfileDrawerItem().withName("Kotchaphan Muangsan").withEmail("kotchaphan.m@demo.com").withIcon(getResources().getDrawable(R.drawable.android))
+                        new ProfileDrawerItem()
+                                .withName("Kotchaphan Muangsan")
+                                .withEmail("kotchaphan.m@demo.com")
+                                .withIcon(getResources().getDrawable(R.drawable.web))
                 )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
@@ -130,7 +137,20 @@ public class MainActivity extends AppCompatActivity {
         PrimaryDrawerItem googleplusItem = new PrimaryDrawerItem().withName("Google plus").withIcon(R.drawable.google_plus_box);
         PrimaryDrawerItem linkedInIntem = new PrimaryDrawerItem().withName("LinkedIn").withIcon(R.drawable.linkedin_box);
         PrimaryDrawerItem settingIntem = new PrimaryDrawerItem().withName("Settings").withIcon(R.drawable.settings);
-        PrimaryDrawerItem checkItem = new PrimaryDrawerItem().withName("News").withIcon(R.drawable.newspaper);
+//        PrimaryDrawerItem checkItem = new PrimaryDrawerItem().withName("News").withIcon(R.drawable.newspaper);
+        ToggleDrawerItem newsToggleDrawerItem = new ToggleDrawerItem().withName("Auto Update").withChecked(true).withOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
+
+            }
+        });
+        SectionDrawerItem socailDrawerItem = new SectionDrawerItem().withName("Social");
+        SwitchDrawerItem switcOnOffhDrawerItem = new SwitchDrawerItem().withName("Notification").withChecked(true).withOnCheckedChangeListener(new OnCheckedChangeListener() {
+            @Override
+            public void onCheckedChanged(IDrawerItem iDrawerItem, CompoundButton compoundButton, boolean b) {
+
+            }
+        });
         //SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem().withName("Second").withIcon(R.drawable.web);
         drawerLeft = new DrawerBuilder()
                 .withActivity(this)
@@ -139,12 +159,15 @@ public class MainActivity extends AppCompatActivity {
                 .withDisplayBelowStatusBar(true)
                 .withSelectedItem(0)
                 .addDrawerItems(
+                        socailDrawerItem,
                         facebookItem,
                         youtubeItem,
                         whatappItem,
                         googleplusItem,
                         linkedInIntem, new DividerDrawerItem(),
-                        settingIntem
+                        settingIntem,
+                        newsToggleDrawerItem,
+                        switcOnOffhDrawerItem
                 )
                 .withActionBarDrawerToggleAnimated(true)
                 .withSavedInstance(savedInstanceState)
