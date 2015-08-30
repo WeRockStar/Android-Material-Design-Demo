@@ -53,7 +53,7 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
-        toolbar.setTitle("  Main Activity");
+        toolbar.setTitle("  Programming");
         toolbar.setTitleTextColor(Color.rgb(255, 255, 255));
         //toolbar.setSubtitle("Subtitle");
         toolbar.setLogo(R.drawable.android);
@@ -291,6 +291,21 @@ public class MainActivity extends AppCompatActivity {
         }
 
         return super.onOptionsItemSelected(item);
+    }
+
+    //CATEGOIES
+    private List<PrimaryDrawerItem> getSetCategotyList() {
+        String[] names = new String[]{};
+        int[] icons = new int[]{};
+        int[] iconsSelected = new int[]{};
+        List<PrimaryDrawerItem> list = new ArrayList<>();
+
+        for (int i = 0; i < names.length; i++) {
+            PrimaryDrawerItem aux = new PrimaryDrawerItem();
+
+        }
+
+        return (list);
     }
 
     public List<Car> getSetCarList(int qtd) {
