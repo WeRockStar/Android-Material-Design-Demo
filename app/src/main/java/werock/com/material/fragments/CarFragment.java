@@ -2,6 +2,7 @@ package werock.com.material.fragments;
 
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -22,6 +23,7 @@ import com.software.shell.fab.ActionButton;
 
 import java.util.List;
 
+import werock.com.material.CarActivity;
 import werock.com.material.MainActivity;
 import werock.com.material.R;
 import werock.com.material.adapters.CarAdapter;
@@ -223,10 +225,13 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
     @Override
     public void OnClickListener(View view, int position) {
-        Toast.makeText(getActivity(), "onClick Postion : " + position, Toast.LENGTH_SHORT).show();
-
-        CarAdapter adapter = (CarAdapter) recyclerView.getAdapter();
-        adapter.removeListItem(position);
+        Intent intent = new Intent(getActivity(), CarActivity.class);
+        intent.putExtra("car", list.get(position));
+        getActivity().startActivity(intent);
+//        Toast.makeText(getActivity(), "onClick Postion : " + position, Toast.LENGTH_SHORT).show();
+//
+//        CarAdapter adapter = (CarAdapter) recyclerView.getAdapter();
+//        adapter.removeListItem(position);
     }
 
     @Override
