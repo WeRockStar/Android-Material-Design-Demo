@@ -49,8 +49,9 @@ public class MainActivity extends AppCompatActivity {
     private Drawer drawerRight;
     private AccountHeader accountHeader;
     private FloatingActionMenu fab;
-    private int mItemDrawerSelected;
-    private int mProfileDrawerSelected;
+    private int mItemDrawerSelected = 0;
+    private int mProfileDrawerSelected = 0;
+
 
     private List<PrimaryDrawerItem> listCatefories;
     private List<Person> listProfile;
@@ -126,13 +127,24 @@ public class MainActivity extends AppCompatActivity {
         */
 
         //TODO Fragment
-        CarFragment carFragment = (CarFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
-        if (carFragment == null) {
-            carFragment = new CarFragment();
-            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
-            fragmentTransaction.replace(R.id.rl_fragment_container, carFragment, "mainFrag");
-            fragmentTransaction.commit();
+
+        // FRAGMENT
+        Fragment frag = getSupportFragmentManager().findFragmentByTag("mainFrag");
+        if (frag == null) {
+            frag = new CarFragment();
+            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+            ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+            ft.commit();
         }
+
+
+//        CarFragment carFragment = (CarFragment) getSupportFragmentManager().findFragmentByTag("mainFrag");
+//        if (carFragment == null) {
+//            carFragment = new CarFragment();
+//            FragmentTransaction fragmentTransaction = getSupportFragmentManager().beginTransaction();
+//            fragmentTransaction.replace(R.id.rl_fragment_container, carFragment, "mainFrag");
+//            fragmentTransaction.commit();
+//        }
 
         //TODO NavigationDrawer
 
@@ -141,23 +153,40 @@ public class MainActivity extends AppCompatActivity {
                 .withActivity(this)
                 .withCompactStyle(false) //show other account
                 .withHeaderBackground(R.drawable.bill_gates)
-                .addProfiles(
-                        new ProfileDrawerItem()
-                                .withName("Kotchaphan Muangsan")
-                                .withEmail("kotchaphan.m@demo.com")
-                                .withIcon(getResources().getDrawable(R.drawable.person_1)),
-                        new ProfileDrawerItem()
-                                .withName("WeRockStar")
-                                .withEmail("rock@demo.com")
-                                .withIcon(getResources().getDrawable(R.drawable.newspaper))
-                )
+                .withSavedInstance(savedInstanceState)
+//                .addProfiles(
+//                        new ProfileDrawerItem()
+//                                .withName("Kotchaphan Muangsan")
+//                                .withEmail("kotchaphan.m@demo.com")
+//                                .withIcon(getResources().getDrawable(R.drawable.person_1)),
+//                        new ProfileDrawerItem()
+//                                .withName("WeRockStar")
+//                                .withEmail("rock@demo.com")
+//                                .withIcon(getResources().getDrawable(R.drawable.newspaper))
+//                )
                 .withOnAccountHeaderListener(new AccountHeader.OnAccountHeaderListener() {
                     @Override
                     public boolean onProfileChanged(View view, IProfile profile, boolean currentProfile) {
-                        return false;
+                        Person person = getPersonByEmail(listProfile, (ProfileDrawerItem) profile);
+                        mProfileDrawerSelected = getPersonPositionByEmail(listProfile, (ProfileDrawerItem) profile);
+                        accountHeader.setBackgroundRes(person.getBackground());
+                        return true;
                     }
                 })
                 .build();
+
+        listProfile = getSetProfileList();
+        if (listProfile != null && listProfile.size() > 0) {
+            if (mProfileDrawerSelected != 0) {
+                Person person = listProfile.get(mProfileDrawerSelected);
+                listProfile.set(mProfileDrawerSelected, listProfile.get(0));
+                listProfile.set(0, person);
+            }
+            for (int i = 0; i < listProfile.size(); i++) {
+                accountHeader.addProfile(listProfile.get(i).getProfile(), i);
+            }
+            accountHeader.setBackgroundRes(listProfile.get(0).getBackground());
+        }
         PrimaryDrawerItem facebookItem = new PrimaryDrawerItem().withName("Facebook").withIcon(R.drawable.facebook_box);
         PrimaryDrawerItem whatappItem = new PrimaryDrawerItem().withName("Whatsapp").withIcon(R.drawable.whatsapp);
         PrimaryDrawerItem youtubeItem = new PrimaryDrawerItem().withName("Youtube").withIcon(R.drawable.youtube_play);
@@ -179,66 +208,41 @@ public class MainActivity extends AppCompatActivity {
             }
         });
         //SecondaryDrawerItem secondaryDrawerItem = new SecondaryDrawerItem().withName("Second").withIcon(R.drawable.web);
+
         drawerLeft = new DrawerBuilder()
                 .withActivity(this)
-                .withDrawerGravity(Gravity.LEFT)
-                .withToolbar(toolbar)
-                .withDisplayBelowStatusBar(true)
-                .withSelectedItem(0)
-                .withActionBarDrawerToggle(true)
-                /*
-                .withOnDrawerNavigationListener(new Drawer.OnDrawerNavigationListener() {
-                    @Override
-                    public boolean onNavigationClickListener(View view) {
-                        return false;
-                    }
-                })
-                */
-                .addDrawerItems(
-                        socailDrawerItem,
-                        facebookItem,
-                        youtubeItem,
-                        whatappItem,
-                        googleplusItem,
-                        linkedInIntem, new DividerDrawerItem(),
-                        settingIntem,
-                        newsToggleDrawerItem,
-                        switcOnOffhDrawerItem
-                )
-                .withActionBarDrawerToggleAnimated(true)
                 .withSavedInstance(savedInstanceState)
+                .withDrawerGravity(Gravity.START)
+                .withDisplayBelowStatusBar(false)
+                .withActionBarDrawerToggle(true)
+                .withActionBarDrawerToggleAnimated(true)
+                .withToolbar(toolbar)
                 .withAccountHeader(accountHeader)
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
                         Fragment frag = null;
+                        if (i == -1) i = 1;
                         mItemDrawerSelected = i;
 
-                        if (i == 0) { // ALL CARS
+                        if (i == 1) { // ALL CARS
                             frag = new CarFragment();
-                        } else if (i == 1) { // LUXURY CAR
+                        } else if (i == 2) {
                             frag = new LuxuryCarFragment();
-                        } else if (i == 2) { // SPORT CAR
+                        } else if (i == 3) {
                             frag = new SportCarFragment();
-                        } else if (i == 3) { // OLD CAR
+                        } else if (i == 4) {
                             frag = new OldCarFragment();
-                        } else if (i == 4) { // POPULAR CAR
+                        } else if (i == 5) {
                             frag = new PopularCarFragment();
                         }
+                        Toast.makeText(getApplicationContext(), "i = " + i, Toast.LENGTH_SHORT).show();
 
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                         ft.commit();
 
-                        toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName().getText());
-
-                        return false;
-                    }
-                })
-                .withOnDrawerItemLongClickListener(new Drawer.OnDrawerItemLongClickListener() {
-                    @Override
-                    public boolean onItemLongClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Toast.makeText(MainActivity.this, "onLongClick : " + i, Toast.LENGTH_SHORT).show();
+                        toolbar.setTitle(" Programming");
                         return false;
                     }
                 })
@@ -373,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
         String[] names = new String[]{"User 1", "User 2", "User 3", "User 4"};
         String[] emails = new String[]{"demoUser_1@gmail.com", "demoUser_2@gmail.com", "demoUser_3@gmail.com", "demoUser_4@gmail.com"};
         int[] photos = new int[]{R.drawable.person_1, R.drawable.person_1, R.drawable.person_1, R.drawable.person_1};
-        int[] background = new int[]{R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming};
+        int[] background = new int[]{R.drawable.bill_gates, R.drawable.bill_gates, R.drawable.bill_gates, R.drawable.bill_gates};
         List<Person> list = new ArrayList<>();
 
         for (int i = 0; i < names.length; i++) {

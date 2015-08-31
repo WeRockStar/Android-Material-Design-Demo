@@ -1,37 +1,118 @@
 package werock.com.material;
 
+import android.content.Intent;
+import android.net.Uri;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.internal.view.ContextThemeWrapper;
+import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
+import android.widget.Button;
+import android.widget.ImageView;
+import android.widget.TextView;
+import android.widget.Toast;
+
+import com.mikepenz.materialdrawer.Drawer;
+import com.mikepenz.materialdrawer.DrawerBuilder;
+
+import me.drakeet.materialdialog.MaterialDialog;
+import werock.com.material.domain.Car;
 
 public class CarActivity extends AppCompatActivity {
+    private Toolbar mToolbar;
+    private Car car;
+    private Drawer navigationDrawerLeft;
+    private MaterialDialog mMaterialDialog;
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_car);
+
+        if (savedInstanceState != null) {
+            car = savedInstanceState.getParcelable("car");
+        } else {
+            if (getIntent() != null && getIntent().getExtras() != null && getIntent().getExtras().getParcelable("car") != null) {
+                car = getIntent().getExtras().getParcelable("car");
+            } else {
+                Toast.makeText(this, "Fail!", Toast.LENGTH_SHORT).show();
+                finish();
+            }
+        }
+
+        mToolbar = (Toolbar) findViewById(R.id.tb_main);
+        mToolbar.setTitle(car.getModels());
+        setSupportActionBar(mToolbar);
+        //getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+
+        getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+        getSupportActionBar().setHomeButtonEnabled(false);
+
+        ImageView ivCar = (ImageView) findViewById(R.id.iv_car);
+        TextView tvModel = (TextView) findViewById(R.id.tv_model);
+        TextView tvBrand = (TextView) findViewById(R.id.tv_brand);
+        TextView tvDescription = (TextView) findViewById(R.id.tv_description);
+        Button btPhone = (Button) findViewById(R.id.bt_phone);
+
+        btPhone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                mMaterialDialog = new MaterialDialog(new ContextThemeWrapper(CarActivity.this, R.style.MyAlertDialog))
+                        .setTitle("Call")
+                        .setMessage(car.getTel())
+                        .setPositiveButton("Call now", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                Intent it = new Intent(Intent.ACTION_CALL);
+                                it.setData(Uri.parse("tel:" + car.getTel().trim()));
+                                startActivity(it);
+                            }
+                        })
+                        .setNegativeButton("Cancel", new View.OnClickListener() {
+                            @Override
+                            public void onClick(View v) {
+                                mMaterialDialog.dismiss();
+                            }
+                        });
+                mMaterialDialog.show();
+            }
+        });
+
+        ivCar.setImageResource(car.getImage());
+        tvModel.setText(car.getModels());
+        tvBrand.setText(car.getBrand());
+        tvDescription.setText(car.getDescription());
+
+        navigationDrawerLeft = new DrawerBuilder()
+                .withActivity(this)
+                .build();
     }
+
 
     @Override
     public boolean onCreateOptionsMenu(Menu menu) {
-        // Inflate the menu; this adds items to the action bar if it is present.
-        getMenuInflater().inflate(R.menu.menu_car, menu);
         return true;
     }
 
+
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
 
-        //noinspection SimplifiableIfStatement
-        if (id == R.id.action_settings) {
-            return true;
+        if (id == android.R.id.home) {
+            finish();
         }
 
-        return super.onOptionsItemSelected(item);
+        return true;
+    }
+
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+        outState.putParcelable("car", car);
     }
 }

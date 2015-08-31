@@ -73,9 +73,10 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
         try {
             //TODO Animation view
-            YoYo.with(Techniques.SlideInDown)
-                    .duration(1000)
-                    .playOn(holder.itemView);
+            if (withAnimation)
+                YoYo.with(Techniques.SlideInDown)
+                        .duration(1000)
+                        .playOn(holder.itemView);
 
         } catch (Exception e) {
 
@@ -89,10 +90,20 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
 
     @Override
     public MyViewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
+        View v;
         Log.d("LOG", "onCreateViewHolder");
-        View view = layoutInflater.inflate(R.layout.item_car_card, parent, false);
-        MyViewHolder holder = new MyViewHolder(view);
-        return holder;
+//        View view = layoutInflater.inflate(R.layout.item_car_card, parent, false);
+//        MyViewHolder holder = new MyViewHolder(view);
+//        return holder;
+
+        if (withCardLayout) {
+            v = layoutInflater.inflate(R.layout.item_car_card, parent, false);
+        } else {
+            v = layoutInflater.inflate(R.layout.item_car, parent, false);
+        }
+
+        MyViewHolder mvh = new MyViewHolder(v);
+        return mvh;
     }
 
     @Override

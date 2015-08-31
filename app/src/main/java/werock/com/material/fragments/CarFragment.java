@@ -42,12 +42,22 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
     protected FloatingActionMenu fab;
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+
+        if (savedInstanceState != null) {
+            list = savedInstanceState.getParcelableArrayList("mList");
+        } else {
+            list = ((MainActivity) getActivity()).getCarsByCategory(1);
+        }
+    }
+
+    @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_car, container, false);
 
         recyclerView = (RecyclerView) view.findViewById(R.id.rv_list);
         recyclerView.setHasFixedSize(true);
-
 
         recyclerView.setOnScrollListener(new RecyclerView.OnScrollListener() {
             @Override

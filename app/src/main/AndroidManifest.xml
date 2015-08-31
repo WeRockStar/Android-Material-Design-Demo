@@ -1,15 +1,17 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="werock.com.material" >
+    package="werock.com.material">
+
+    <uses-permission android:name="ANDROID.PERMISSION.CALL_PHONE" />
 
     <application
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
-        android:theme="@style/AppTheme" >
+        android:theme="@style/AppTheme">
         <activity
             android:name=".MainActivity"
-            android:label="@string/app_name" >
+            android:label="@string/app_name">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -18,12 +20,10 @@
         </activity>
         <activity
             android:name=".SecondActivity"
-            android:label="@string/title_activity_second" >
-        </activity>
+            android:label="@string/title_activity_second"></activity>
         <activity
             android:name=".CarActivity"
-            android:label="@string/title_activity_car" >
-        </activity>
+            android:label="@string/title_activity_car"></activity>
     </application>
 
 </manifest>

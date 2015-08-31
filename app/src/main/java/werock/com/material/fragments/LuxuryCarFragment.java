@@ -12,8 +12,6 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Toast;
-
-import com.github.clans.fab.FloatingActionButton;
 import com.github.clans.fab.FloatingActionMenu;
 
 import java.util.ArrayList;
@@ -37,7 +35,6 @@ public class LuxuryCarFragment extends CarFragment {
             list = ((MainActivity) getActivity()).getCarsByCategory(1);
         }
     }
-
 
     @Override
     public View onCreateView(LayoutInflater inflater,
@@ -77,7 +74,7 @@ public class LuxuryCarFragment extends CarFragment {
             }
         });
 
-        GridLayoutManager llm = new GridLayoutManager(getActivity(), 3, GridLayoutManager.VERTICAL, false);
+        GridLayoutManager llm = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(llm);
 
         CarAdapter adapter = new CarAdapter(getActivity(), list);
