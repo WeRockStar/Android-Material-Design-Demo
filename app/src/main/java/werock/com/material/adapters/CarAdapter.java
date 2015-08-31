@@ -35,11 +35,20 @@ public class CarAdapter extends RecyclerView.Adapter<CarAdapter.MyViewHolder> {
     private int width;
     private int height;
 
-    public CarAdapter(Context context, List<Car> carList) {
+    private boolean withAnimation;
+    private boolean withCardLayout;
+
+    public CarAdapter(Context context, List<Car> list) {
+        this(context, list, true, true);
+    }
+
+    public CarAdapter(Context context, List<Car> carList, boolean wa, boolean wcl) {
         this.context = context;
         this.carList = carList;
         layoutInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
+        withAnimation = wa;
+        withCardLayout = wcl;
         //Scale for pre lollipop
         this.scale = this.context.getResources().getDisplayMetrics().density;
         this.width = this.context.getResources().getDisplayMetrics().widthPixels - (int) (14 * scale + 0.5f);

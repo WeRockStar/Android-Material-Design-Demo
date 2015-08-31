@@ -33,11 +33,11 @@ import werock.com.material.interfaces.RecyclerViewOnClickListenerHack;
  */
 public class CarFragment extends Fragment implements RecyclerViewOnClickListenerHack, View.OnClickListener {
 
-    private RecyclerView recyclerView;
-    private List<Car> list;
+    protected RecyclerView recyclerView;
+    protected List<Car> list;
     //private FloatingActionButton fab;
     // private ActionButton fab;
-    private FloatingActionMenu fab;
+    protected FloatingActionMenu fab;
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
@@ -98,8 +98,9 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getActivity());
         linearLayoutManager.setOrientation(LinearLayoutManager.VERTICAL);
-       // linearLayoutManager.setReverseLayout(true);
+        // linearLayoutManager.setReverseLayout(true);
         recyclerView.setLayoutManager(linearLayoutManager);
+
 
         /*
         GridLayoutManager gridLayoutManager = new GridLayoutManager(getActivity(), 2, GridLayoutManager.VERTICAL, false);
@@ -112,12 +113,17 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         recyclerView.setLayoutManager(staggeredGridLayoutManager);
         */
         //for 30 item
-        list = ((MainActivity) getActivity()).getSetCarList(30);
+        //list = ((MainActivity) getActivity()).getSetCarList(30);
         CarAdapter carAdapter = new CarAdapter(getActivity(), list);
-
         //TODO onClick
         //carAdapter.setRecyclerViewOnClickListenerHack(this);
         recyclerView.setAdapter(carAdapter);
+        //call method
+        setFloatingActionButton();
+        return view;
+    }
+
+    public void setFloatingActionButton() {
 
         //TODO Floating Action Button
         fab = (FloatingActionMenu) getActivity().findViewById(R.id.fab);
@@ -213,7 +219,6 @@ public class CarFragment extends Fragment implements RecyclerViewOnClickListener
         fab.setType(FloatingActionButton.TYPE_NORMAL);
         */
 
-        return view;
     }
 
     @Override

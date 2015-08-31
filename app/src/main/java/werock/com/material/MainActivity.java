@@ -229,7 +229,7 @@ public class MainActivity extends AppCompatActivity {
                         ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                         ft.commit();
 
-                        toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName());
+                        //toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName());
 
                         return false;
                     }
