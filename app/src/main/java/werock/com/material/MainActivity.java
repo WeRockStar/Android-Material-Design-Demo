@@ -1,10 +1,7 @@
 package werock.com.material;
 
 import android.content.Intent;
-import android.graphics.Bitmap;
 import android.graphics.Color;
-import android.net.Uri;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -38,6 +35,10 @@ import java.util.List;
 import werock.com.material.domain.Car;
 import werock.com.material.domain.Person;
 import werock.com.material.fragments.CarFragment;
+import werock.com.material.fragments.LuxuryCarFragment;
+import werock.com.material.fragments.OldCarFragment;
+import werock.com.material.fragments.PopularCarFragment;
+import werock.com.material.fragments.SportCarFragment;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -72,7 +73,7 @@ public class MainActivity extends AppCompatActivity {
         toolbar.setTitle("  Programming");
         toolbar.setTitleTextColor(Color.rgb(255, 255, 255));
         //toolbar.setSubtitle("Subtitle");
-        toolbar.setLogo(R.drawable.android);
+        //toolbar.setLogo(R.drawable.android);
         setSupportActionBar(toolbar);
         /*
         getSupportActionBar().setDefaultDisplayHomeAsUpEnabled(true);
@@ -216,20 +217,20 @@ public class MainActivity extends AppCompatActivity {
                         if (i == 0) { // ALL CARS
                             frag = new CarFragment();
                         } else if (i == 1) { // LUXURY CAR
-                            //frag = new LuxuryCarFragment();
+                            frag = new LuxuryCarFragment();
                         } else if (i == 2) { // SPORT CAR
-                            //frag = new SportCarFragment();
+                            frag = new SportCarFragment();
                         } else if (i == 3) { // OLD CAR
-                            //frag = new OldCarFragment();
+                            frag = new OldCarFragment();
                         } else if (i == 4) { // POPULAR CAR
-                            //frag = new PopularCarFragment();
+                            frag = new PopularCarFragment();
                         }
 
                         FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
                         ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
                         ft.commit();
 
-                        //toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName());
+                        toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName().getText());
 
                         return false;
                     }
@@ -405,10 +406,9 @@ public class MainActivity extends AppCompatActivity {
 
     public List<Car> getSetCarList(int qtd, int category) {
         String[] models = new String[]{"PHP", "C#", "Java", "C++", "C", "SQL", "HTML5", "CSS3"
-                , "JavaScript", "Go", "Scala", "Ruby", "Python", "R"};
+                , "JavaScript", "Go"};
         String[] brands = new String[]{"Web", "Web Desktop", "Web Desktop", "Desktop", "Desktop", "Database"
-                , "Web", "Web", "Web", "Web Server", "Unknow", "Web", "Web Desktop"
-                , "Analysis"};
+                , "Web", "Web", "Web", "Web Server"};
         int[] categories = new int[]{2, 1, 2, 1, 1, 4, 3, 2, 4, 1};
         String description = "Programming is my life";
         int[] image = {R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming,
@@ -449,6 +449,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Override
     public void onSaveInstanceState(Bundle outState) {
+
+        outState.putInt("mItemDrawerSelected", mItemDrawerSelected);
+        outState.putInt("mProfileDrawerSelected", mProfileDrawerSelected);
+
+        outState.putParcelableArrayList("listCars", (ArrayList<Car>) listCars);
         outState = drawerRight.saveInstanceState(outState);
         outState = drawerLeft.saveInstanceState(outState);
 
