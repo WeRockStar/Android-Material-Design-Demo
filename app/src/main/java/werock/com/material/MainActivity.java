@@ -5,6 +5,7 @@ import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.net.Uri;
 import android.os.PersistableBundle;
+import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import werock.com.material.domain.Car;
+import werock.com.material.domain.Person;
 import werock.com.material.fragments.CarFragment;
 
 public class MainActivity extends AppCompatActivity {
@@ -46,11 +48,25 @@ public class MainActivity extends AppCompatActivity {
     private Drawer drawerRight;
     private AccountHeader accountHeader;
     private FloatingActionMenu fab;
+    private int mItemDrawerSelected;
+    private int mProfileDrawerSelected;
+
+    private List<PrimaryDrawerItem> listCatefories;
+    private List<Person> listProfile;
+    private List<Car> listCars;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        if (savedInstanceState != null) {
+            mItemDrawerSelected = savedInstanceState.getInt("mItemDrawerSelected", 0);
+            mProfileDrawerSelected = savedInstanceState.getInt("mProfileDrawerSelected", 0);
+            listCars = savedInstanceState.getParcelableArrayList("listCars");
+        } else {
+            listCars = getSetCarList(50);
+        }
 
         toolbar = (Toolbar) findViewById(R.id.toolbar_main);
         toolbar.setTitle("  Programming");
@@ -128,7 +144,7 @@ public class MainActivity extends AppCompatActivity {
                         new ProfileDrawerItem()
                                 .withName("Kotchaphan Muangsan")
                                 .withEmail("kotchaphan.m@demo.com")
-                                .withIcon(getResources().getDrawable(R.drawable.web)),
+                                .withIcon(getResources().getDrawable(R.drawable.person_1)),
                         new ProfileDrawerItem()
                                 .withName("WeRockStar")
                                 .withEmail("rock@demo.com")
@@ -194,7 +210,27 @@ public class MainActivity extends AppCompatActivity {
                 .withOnDrawerItemClickListener(new Drawer.OnDrawerItemClickListener() {
                     @Override
                     public boolean onItemClick(View view, int i, IDrawerItem iDrawerItem) {
-                        Toast.makeText(MainActivity.this, "onClick : " + i, Toast.LENGTH_SHORT).show();
+                        Fragment frag = null;
+                        mItemDrawerSelected = i;
+
+                        if (i == 0) { // ALL CARS
+                            frag = new CarFragment();
+                        } else if (i == 1) { // LUXURY CAR
+                            //frag = new LuxuryCarFragment();
+                        } else if (i == 2) { // SPORT CAR
+                            //frag = new SportCarFragment();
+                        } else if (i == 3) { // OLD CAR
+                            //frag = new OldCarFragment();
+                        } else if (i == 4) { // POPULAR CAR
+                            //frag = new PopularCarFragment();
+                        }
+
+                        FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
+                        ft.replace(R.id.rl_fragment_container, frag, "mainFrag");
+                        ft.commit();
+
+                        toolbar.setTitle(((PrimaryDrawerItem) iDrawerItem).getName());
+
                         return false;
                     }
                 })
@@ -266,7 +302,13 @@ public class MainActivity extends AppCompatActivity {
         drawerLeft.addItem(new ProfileDrawerItem().withName("LikedIn"));
         drawerLeft.addItem(new ProfileDrawerItem().withName("Google plus"));
         */
-
+        listCatefories = getSetCategotyList();
+        if (listCatefories != null && listCatefories.size() > 0) {
+            for (int i = 0; i < listCatefories.size(); i++) {
+                drawerLeft.addItem(listCatefories.get(i));
+            }
+            drawerLeft.setSelection(mItemDrawerSelected);
+        }
         fab = (FloatingActionMenu) findViewById(R.id.fab);
     }
 
@@ -295,25 +337,80 @@ public class MainActivity extends AppCompatActivity {
 
     //CATEGOIES
     private List<PrimaryDrawerItem> getSetCategotyList() {
-        String[] names = new String[]{};
-        int[] icons = new int[]{};
-        int[] iconsSelected = new int[]{};
+        String[] names = new String[]{"Programming", "Programming", "Programming", "Programming", "Programming"};
+        int[] icons = new int[]{R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web, R.drawable.web};
+        int[] iconsSelected = new int[]{R.drawable.car_selected_3, R.drawable.car_selected_3, R.drawable.car_selected_3, R.drawable.car_selected_3,
+                R.drawable.car_selected_3};
         List<PrimaryDrawerItem> list = new ArrayList<>();
 
         for (int i = 0; i < names.length; i++) {
             PrimaryDrawerItem aux = new PrimaryDrawerItem();
-
+            aux.withName(names[i])
+                    .withIcon(getResources().getDrawable(icons[i]))
+                    .withTextColor(getResources().getColor(R.color.colorPrimary))
+                    .withSelectedIcon(getResources().getDrawable(iconsSelected[i]))
+                    .withSelectedColor(getResources().getColor(R.color.colorPrimary));
+            //add to list
+            list.add(aux);
         }
-
         return (list);
     }
 
+    //PERSON
+    private Person getPersonByEmail(List<Person> list, ProfileDrawerItem p) {
+        Person aux = null;
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProfile().getEmail().equals(p.getEmail())) {
+                aux = list.get(i);
+                break;
+            }
+        }
+        return (aux);
+    }
+
+    private List<Person> getSetProfileList() {
+        String[] names = new String[]{"User 1", "User 2", "User 3", "User 4"};
+        String[] emails = new String[]{"demoUser_1@gmail.com", "demoUser_2@gmail.com", "demoUser_3@gmail.com", "demoUser_4@gmail.com"};
+        int[] photos = new int[]{R.drawable.person_1, R.drawable.person_1, R.drawable.person_1, R.drawable.person_1};
+        int[] background = new int[]{R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming};
+        List<Person> list = new ArrayList<>();
+
+        for (int i = 0; i < names.length; i++) {
+            ProfileDrawerItem aux = new ProfileDrawerItem();
+            aux.withName(names[i]).withEmail(emails[i]).withIcon(getResources().getDrawable(photos[i]));
+
+            Person p = new Person();
+            p.setProfile(aux);
+            p.setBackground(background[i]);
+
+            list.add(p);
+        }
+        return (list);
+    }
+
+    private int getPersonPositionByEmail(List<Person> list, ProfileDrawerItem p) {
+        for (int i = 0; i < list.size(); i++) {
+            if (list.get(i).getProfile().getEmail().equals(p.getEmail())) {
+                return (i);
+            }
+        }
+        return (-1);
+    }
+
+
+    //CAR
     public List<Car> getSetCarList(int qtd) {
+        return (getSetCarList(qtd, 0));
+    }
+
+    public List<Car> getSetCarList(int qtd, int category) {
         String[] models = new String[]{"PHP", "C#", "Java", "C++", "C", "SQL", "HTML5", "CSS3"
                 , "JavaScript", "Go", "Scala", "Ruby", "Python", "R"};
         String[] brands = new String[]{"Web", "Web Desktop", "Web Desktop", "Desktop", "Desktop", "Database"
                 , "Web", "Web", "Web", "Web Server", "Unknow", "Web", "Web Desktop"
                 , "Analysis"};
+        int[] categories = new int[]{2, 1, 2, 1, 1, 4, 3, 2, 4, 1};
+        String description = "Programming is my life";
         int[] image = {R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming,
                 R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming,
                 R.drawable.programming, R.drawable.programming, R.drawable.programming, R.drawable.programming,
@@ -322,9 +419,32 @@ public class MainActivity extends AppCompatActivity {
         List<Car> carList = new ArrayList<>();
         for (int i = 0; i < qtd; i++) {
             Car car = new Car(models[i % models.length], brands[i % brands.length], image[i % image.length]);
+            car.setDescription(description);
+            car.setCategory(categories[i % brands.length]);
+            car.setTel("082-1111111");
+
+            if (category != 0 && car.getCategory() != category) {
+                continue;
+            }
             carList.add(car);
         }
         return carList;
+    }
+
+    public List<Car> getCarsByCategory(int category) {
+        List<Car> listAux = new ArrayList<>();
+        for (int i = 0; i < listCars.size(); i++) {
+            if (category != 0 && listCars.get(i).getCategory() != category) {
+                continue;
+            }
+
+            listAux.add(listCars.get(i));
+        }
+        return (listAux);
+    }
+
+    public List<Car> getListCars() {
+        return (listCars);
     }
 
     @Override
