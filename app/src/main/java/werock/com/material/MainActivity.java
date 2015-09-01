@@ -425,7 +425,7 @@ public class MainActivity extends AppCompatActivity {
             Car car = new Car(models[i % models.length], brands[i % brands.length], image[i % image.length]);
             car.setDescription(description);
             car.setCategory(categories[i % brands.length]);
-            car.setTel("082-1111111");
+            car.setTel("0821111111");
 
             if (category != 0 && car.getCategory() != category) {
                 continue;

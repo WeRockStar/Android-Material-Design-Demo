@@ -2,6 +2,8 @@ package werock.com.material;
 
 import android.content.Intent;
 import android.net.Uri;
+import android.support.v4.widget.DrawerLayout;
+import android.support.v7.app.ActionBarDrawerToggle;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.internal.view.ContextThemeWrapper;
@@ -43,6 +45,8 @@ public class CarActivity extends AppCompatActivity {
             }
         }
 
+        Toast.makeText(CarActivity.this, "Tel : " + car.getTel().toString(), Toast.LENGTH_SHORT).show();
+
         mToolbar = (Toolbar) findViewById(R.id.tb_main);
         mToolbar.setTitle(car.getModels());
         setSupportActionBar(mToolbar);
@@ -66,9 +70,13 @@ public class CarActivity extends AppCompatActivity {
                         .setPositiveButton("Call now", new View.OnClickListener() {
                             @Override
                             public void onClick(View v) {
-                                Intent it = new Intent(Intent.ACTION_CALL);
-                                it.setData(Uri.parse("tel:" + car.getTel().trim()));
-                                startActivity(it);
+                                Intent it = new Intent(Intent.ACTION_CALL, Uri.parse(car.getTel().trim()));
+                                //it.setData(Uri.parse("tel:" + car.getTel().trim()));
+                                try {
+                                    startActivity(it);
+                                } catch (android.content.ActivityNotFoundException e) {
+                                    Toast.makeText(getApplicationContext(), e.getMessage().toString(), Toast.LENGTH_SHORT).show();
+                                }
                             }
                         })
                         .setNegativeButton("Cancel", new View.OnClickListener() {
@@ -88,6 +96,10 @@ public class CarActivity extends AppCompatActivity {
 
         navigationDrawerLeft = new DrawerBuilder()
                 .withActivity(this)
+                .withToolbar(mToolbar)
+                .withActionBarDrawerToggle(true)
+                .withCloseOnClick(true)
+                .withActionBarDrawerToggleAnimated(false)
                 .build();
     }
 

@@ -3,6 +3,7 @@
     package="werock.com.material">
 
     <uses-permission android:name="ANDROID.PERMISSION.CALL_PHONE" />
+    <uses-permission android:name="android.permission.READ_PHONE_STATE" />
 
     <application
         android:allowBackup="true"
